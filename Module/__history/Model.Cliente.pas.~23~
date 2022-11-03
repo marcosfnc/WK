@@ -1,0 +1,99 @@
+unit Model.Cliente;
+
+interface
+  uses
+    Model.Connection, FireDAC.Comp.Client, Data.DB, System.SysUtils;
+type
+    TCliente = class
+    private
+        FCOD_CLIENTE: Integer;
+        FCOD_VENDA: Integer;
+        FNOME: string;
+        FCIDADE: string;
+        FUF: string;
+    public
+        property COD_CLIENTE : integer read FCOD_CLIENTE write FCOD_CLIENTE;
+        property COD_VENDA : integer read FCOD_VENDA write FCOD_VENDA;
+        property NOME : string read FNOME write FNOME;
+        property CIDADE : string read FCIDADE write FCIDADE;
+        property UF : string read FUF write FUF;
+
+        function searchClient(out erro: string): Boolean;
+        function InserirCabecalho(out erro: string): Boolean;
+
+end;
+
+implementation
+
+{ TCliente }
+
+function TCliente.InserirCabecalho(out erro: string): Boolean;
+begin
+  try
+    Dm.QryVenda.SQL.Clear;
+    Dm.QryVenda.SQL.Add('INSERT INTO venda');
+    Dm.qryVenda.SQL.Add('(dtemissao,idcliente,vlrtotal)');
+    Dm.QryVenda.SQL.Add('VALUES( :dtemissao,:idcliente,:vlrtotal )');
+
+    Dm.QryVenda.ParamByName('dtemissao').Asdate    := now;
+    Dm.QryVenda.ParamByName('idcliente').Asinteger := COD_CLIENTE;
+    Dm.QryVenda.ParamByName('vlrtotal').AsFloat    := 0;
+
+    Dm.QryVenda.execSql;
+
+    COD_VENDA := Dm.GetId;
+  except on ex:exception do
+    begin
+      erro := 'Erro ao inserir os dados do cliente: ' + ex.Message;
+      Result := False;
+    end;
+  end;
+end;
+
+function TCliente.searchClient(out erro: string): Boolean;
+var
+  qry : TFDQuery;
+  Dm: TDm;
+begin
+  try
+    dm := Tdm.Create(nil);
+    qry := TFDQuery.Create(nil);
+    qry.Connection := Dm.Fconnection;
+
+    with qry do
+    begin
+      Active := false;
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT nome,cidade,uf');
+      SQL.Add('FROM cliente');
+      SQL.Add('where id = :id');
+
+      ParamByName('id').Value := COD_CLIENTE;
+
+      Active := true;
+    end;
+
+    if qry.IsEmpty then
+    begin
+      erro := 'Cliente nao encontrado.';
+      Result := False;
+      exit;
+    end;
+
+    erro   := '';
+    NOME   := qry.FieldByName('nome').AsString;
+    CIDADE := qry.FieldByName('cidade').AsString;
+    UF     := qry.FieldByName('uf').AsString;
+    Result := True;
+
+    except on ex:exception do
+    begin
+      erro := 'Erro ao consultar Status do cliente: ' + ex.Message;
+      Result := False;
+    end;
+  end;
+
+end;
+
+end.

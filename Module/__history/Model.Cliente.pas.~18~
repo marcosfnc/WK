@@ -1,0 +1,88 @@
+unit Model.Cliente;
+
+interface
+  uses
+    Model.Connection, FireDAC.Comp.Client, Data.DB, System.SysUtils;
+type
+    TCliente = class
+    private
+        FCOD_CLIENTE: Integer;
+        FNOME: string;
+        FCIDADE: string;
+        FUF: string;
+    public
+        constructor Create;
+        destructor Destroy; override;
+        property COD_CLIENTE : integer read FCOD_CLIENTE write FCOD_CLIENTE;
+        property NOME : string read FNOME write FNOME;
+        property CIDADE : string read FCIDADE write FCIDADE;
+        property UF : string read FUF write FUF;
+
+        function searchClient(out erro: string): Boolean;
+
+end;
+
+implementation
+
+{ TCliente }
+
+constructor TCliente.Create;
+begin
+
+end;
+
+destructor TCliente.Destroy;
+begin
+
+  inherited;
+end;
+
+
+
+function TCliente.searchClient(out erro: string): Boolean;
+var
+  qry : TFDQuery;
+  Dm: TDm;
+begin
+  try
+    dm := Tdm.Create(nil);
+    qry := TFDQuery.Create(nil);
+    qry.Connection := Dm.Fconnection;
+
+    with qry do
+    begin
+      Active := false;
+      Close;
+      SQL.Clear;
+      SQL.Add('SELECT nome,cidade,uf');
+      SQL.Add('FROM cliente');
+      SQL.Add('where id = :id');
+
+      ParamByName('id').Value := COD_CLIENTE;
+
+      Active := true;
+    end;
+
+    if qry.IsEmpty then
+    begin
+      erro := 'Cliente nao encontrado.';
+      Result := False;
+      exit;
+    end;
+
+    erro   := '';
+    NOME   := qry.FieldByName('nome').ToString;
+    CIDADE := qry.FieldByName('cidade').ToString;
+    UF     := qry.FieldByName('uf').ToString;
+    Result := True;
+
+    except on ex:exception do
+    begin
+      erro := 'Erro ao consultar Status do cliente: ' + ex.Message;
+      Result := False;
+    end;
+  end;
+
+end;
+
+end.

@@ -1,0 +1,58 @@
+unit uCancelaVenda;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Model.Connection;
+
+type
+  TFrmCancelarVenda = class(TForm)
+    EdtNumNota: TEdit;
+    BtnConfirma: TButton;
+    BtnVoltar: TButton;
+    procedure EdtNumNotaKeyPress(Sender: TObject; var Key: Char);
+    procedure BtnConfirmaClick(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCancelarVenda: TFrmCancelarVenda;
+  Ok: Boolean;
+
+implementation
+
+{$R *.dfm}
+
+procedure TFrmCancelarVenda.BtnConfirmaClick(Sender: TObject);
+begin
+  if (EdtNumNota.Text <> '') then
+  begin
+    if Dm.DeleteVenda(StrToInt(EdtNumNota.Text)) then
+      Ok := True
+    else
+      Ok := False;
+  end;
+end;
+
+procedure TFrmCancelarVenda.EdtNumNotaKeyPress(Sender: TObject; var Key: Char);
+begin
+  if not CharInSet(Key, ['0'..'9',#8,#13,#27])  then
+    Key := #0;
+
+  if Key = #13 then
+    BtnConfirma.SetFocus;
+end;
+
+procedure TFrmCancelarVenda.FormCloseQuery(Sender: TObject;
+  var CanClose: Boolean);
+begin
+  CanClose := Ok;
+  Close;
+end;
+
+end.

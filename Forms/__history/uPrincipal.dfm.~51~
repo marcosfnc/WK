@@ -1,0 +1,389 @@
+object FrmPrincipal: TFrmPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'FrmPrincipal'
+  ClientHeight = 561
+  ClientWidth = 784
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PnlRodaPe: TPanel
+    Left = 0
+    Top = 504
+    Width = 784
+    Height = 57
+    Align = alBottom
+    Color = clInactiveCaption
+    ParentBackground = False
+    TabOrder = 0
+    object BtnGravar: TButton
+      Left = 8
+      Top = 8
+      Width = 85
+      Height = 40
+      Caption = '&Gravar'
+      Enabled = False
+      TabOrder = 0
+    end
+    object BtnCancelar: TButton
+      Left = 99
+      Top = 8
+      Width = 85
+      Height = 40
+      Caption = '&Cancelar'
+      Enabled = False
+      TabOrder = 1
+      OnClick = BtnCancelarClick
+    end
+  end
+  object PnlTopo: TPanel
+    Left = 0
+    Top = 0
+    Width = 784
+    Height = 57
+    Align = alTop
+    Color = clInactiveCaption
+    ParentBackground = False
+    TabOrder = 1
+    object Label1: TLabel
+      Left = 8
+      Top = 8
+      Width = 123
+      Height = 13
+      Caption = 'Digite o c'#243'digo do cliente:'
+    end
+    object Label6: TLabel
+      Left = 672
+      Top = 8
+      Width = 45
+      Height = 13
+      Caption = 'N'#186' Venda'
+    end
+    object LblNomeCliente: TLabel
+      Left = 368
+      Top = 16
+      Width = 31
+      Height = 13
+      Caption = 'Nome:'
+      Visible = False
+    end
+    object LblCidadeCliente: TLabel
+      Left = 368
+      Top = 35
+      Width = 37
+      Height = 13
+      Caption = 'Cidade:'
+      Visible = False
+    end
+    object EdtSearchClient: TEdit
+      Left = 8
+      Top = 27
+      Width = 342
+      Height = 21
+      TabOrder = 0
+      OnKeyPress = EdtSearchClientKeyPress
+    end
+    object EdtNumVenda: TEdit
+      Left = 672
+      Top = 27
+      Width = 97
+      Height = 24
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Text = '000'
+    end
+  end
+  object PnlCentral: TPanel
+    Left = 0
+    Top = 113
+    Width = 784
+    Height = 391
+    Align = alClient
+    TabOrder = 2
+    object Label5: TLabel
+      Left = 648
+      Top = 333
+      Width = 29
+      Height = 16
+      Caption = 'Total'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object DBGrid1: TDBGrid
+      Left = 1
+      Top = 1
+      Width = 593
+      Height = 389
+      Align = alLeft
+      DataSource = Dm.DsGrid
+      ReadOnly = True
+      TabOrder = 0
+      TitleFont.Charset = DEFAULT_CHARSET
+      TitleFont.Color = clWindowText
+      TitleFont.Height = -11
+      TitleFont.Name = 'Tahoma'
+      TitleFont.Style = []
+      Columns = <
+        item
+          Expanded = False
+          FieldName = 'idproduto'
+          Title.Caption = 'C'#243'digo'
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'Descricao'
+          Title.Caption = 'Descri'#231#227'o'
+          Width = 240
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'qtde'
+          Title.Caption = 'Qtde'
+          Width = 61
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'vlrunitario'
+          Title.Caption = 'Vlr. Unit'
+          Width = 70
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'vlrtotal'
+          Title.Caption = 'Vlr. Total'
+          Width = 95
+          Visible = True
+        end>
+    end
+    object EdtTotalVenda: TEdit
+      Left = 648
+      Top = 352
+      Width = 121
+      Height = 33
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Text = '0,00'
+    end
+    object BtnPedidos: TButton
+      Left = 600
+      Top = 16
+      Width = 169
+      Height = 30
+      Caption = 'Abrir Venda'
+      TabOrder = 2
+      OnClick = BtnPedidosClick
+    end
+    object BtnCancelaPedido: TButton
+      Left = 600
+      Top = 52
+      Width = 169
+      Height = 30
+      Caption = 'Cancelar Venda'
+      TabOrder = 3
+      OnClick = BtnCancelaPedidoClick
+    end
+  end
+  object PnlBuscaProd: TPanel
+    Left = 0
+    Top = 57
+    Width = 784
+    Height = 56
+    Align = alTop
+    Color = 14215400
+    ParentBackground = False
+    TabOrder = 3
+    object Label2: TLabel
+      Left = 8
+      Top = 0
+      Width = 200
+      Height = 19
+      Caption = 'Digite o Codigo do produto:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label3: TLabel
+      Left = 416
+      Top = 6
+      Width = 24
+      Height = 13
+      Caption = 'Qtde'
+    end
+    object Label4: TLabel
+      Left = 600
+      Top = 6
+      Width = 24
+      Height = 13
+      Caption = 'Total'
+    end
+    object Label7: TLabel
+      Left = 503
+      Top = 6
+      Width = 64
+      Height = 13
+      Caption = 'Valor Unit'#225'rio'
+    end
+    object Label8: TLabel
+      Left = 483
+      Top = 26
+      Width = 9
+      Height = 19
+      Caption = 'X'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label9: TLabel
+      Left = 583
+      Top = 25
+      Width = 12
+      Height = 19
+      Caption = '='
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object LblProduto: TLabel
+      Left = 191
+      Top = 25
+      Width = 77
+      Height = 19
+      Caption = 'LblProduto'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      Visible = False
+    end
+    object LblCodProduto: TLabel
+      Left = 151
+      Top = 25
+      Width = 27
+      Height = 19
+      Caption = '000'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      Visible = False
+    end
+    object EdtSearchProduto: TEdit
+      Left = 8
+      Top = 25
+      Width = 137
+      Height = 24
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+      OnKeyPress = EdtSearchProdutoKeyPress
+    end
+    object EdtQtde: TEdit
+      Left = 416
+      Top = 25
+      Width = 57
+      Height = 24
+      Alignment = taCenter
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+      Text = '1'
+      OnExit = EdtQtdeExit
+      OnKeyPress = EdtQtdeKeyPress
+    end
+    object EdtTotalIten: TEdit
+      Left = 604
+      Top = 25
+      Width = 65
+      Height = 24
+      Alignment = taRightJustify
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 2
+      Text = '0,00'
+    end
+    object BtnInsertProd: TButton
+      Left = 683
+      Top = 22
+      Width = 46
+      Height = 26
+      Caption = '...'
+      Enabled = False
+      TabOrder = 3
+      OnClick = BtnInsertProdClick
+    end
+    object EdtVlrUnitario: TEdit
+      Left = 503
+      Top = 25
+      Width = 74
+      Height = 24
+      Alignment = taRightJustify
+      Enabled = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 4
+      Text = '0,00'
+      OnExit = EdtVlrUnitarioExit
+      OnKeyPress = EdtVlrUnitarioKeyPress
+    end
+  end
+end
